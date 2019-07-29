@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+
+  mosquitto:
+    image: eclipse-mosquitto:1.6.2
+    ports:
+    - "1883:1883"
+    - "9001:9001"
+
+  sample-service:
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile
+    depends_on:
+      - mosquitto
+    image: dweber/quarkus-eval/sample:native
+    ports:
+      - "8080:8080"
